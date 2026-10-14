@@ -38,6 +38,8 @@ When defining your `OIDCClient` manifest, you must include specific fields to pa
 - `spec.refreshTokenExpirationSeconds`: This field is also strictly required and will cause a validation error if omitted. It defines the lifespan of the refresh token.
 - `scopes` (Optional): This field allows you to restrict the scopes that a client can request. If not explicitly configured, the allowed scopes will default to `openid`, `profile`, and `offline_access`.
 
+NOTE: The groups are not provided by default, if you want the groups for users in Rancher you _must_ configure the groups scope explicitly.
+
 ### Example OIDC Client Manifest
 
 Below is an example of an `OIDCClient` configuration:
@@ -57,10 +59,11 @@ spec:
     - "https://example-app.com/callback"
   tokenExpirationSeconds: 3600
   refreshTokenExpirationSeconds: 86400
-  # scopes:
-  #   - openid
-  #   - profile
-  #   - offline_access
+  scopes:
+    - openid
+    - profile
+    - offline_access
+    - groups
 
 ```
 
@@ -86,6 +89,7 @@ spec:
     - openid
     - profile
     - offline_access
+    - groups
 status:
   clientID: client-xxx
   clientSecrets:
